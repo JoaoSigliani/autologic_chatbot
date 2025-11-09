@@ -37,7 +37,7 @@ A comunicação entre o Dialogflow e o n8n é feita via **Webhook HTTP**, com um
 - Importe o arquivo ```Autologic.json``` disponibilizado neste repositório
 - No nó ***Gemini Chat Model***, atualize a key do Gemini API para uma gerada recentemente
 
-### 2. Criando túnel http com ngrok
+### 2. Criando túnel https com ngrok
 - No terminal do ngrok, digite o comando ```ngrok http 5678```
 - Em ***Forwarding***, o https gerado é o túnel que leva ao n8n inicializado no localhost
 

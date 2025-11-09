@@ -35,7 +35,7 @@ A comunicação entre o Dialogflow e o n8n é feita via **Webhook HTTP**, com um
 - Crie um novo workflow
 - Nas opções, clique em '***import from file***'
 - Importe o arquivo ```Autologic.json``` disponibilizado neste repositório
-- No nó ```Gemini Chat Model```, atualize a key do Gemini API para uma gerada recentemente
+- No nó ***Gemini Chat Model***, atualize a key do Gemini API para uma gerada recentemente
 
 ### 2. Criando túnel http com ngrok
 - No terminal do ngrok, digite o comando ```ngrok http 5678```

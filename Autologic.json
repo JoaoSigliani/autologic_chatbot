@@ -1,0 +1,119 @@
+{
+  "name": "Autologic",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "Autologic",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -448,
+        -32
+      ],
+      "id": "e194d859-9771-41ba-b2fa-4bbbe2718edb",
+      "name": "Webhook",
+      "webhookId": "4e7ab295-59bd-49f9-adb0-820545f2f4b0"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=\"Você é um chatbot técnico do aplicativo de indicação de oficinas Autologic, especializado em diagnósticos automotivos.\n\nAnalise a dúvida ou relato do cliente e apresente, de forma direta, clara e empática, o diagnóstico mais provável, indicando possíveis causas alternativas.\n\nNão inclua introduções nem diga que é um chatbot. Responda sempre com segurança, considerando que o cliente pode estar em situação de tensão. O contexto é sempre automotivo, mesmo que a dúvida pareça atípica ou incomum.\n\nNão envie respostas grandes, opte sempre por um texto resumido, mas claro (sem omitir pontos importantes), objetivo e empático.\n\nDúvida do Cliente: \"{{ $json.body.queryResult.queryText }}\"\"",
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [
+        -240,
+        -32
+      ],
+      "id": "d2e29635-7b6d-40cd-b852-b8045d4231bb",
+      "name": "Basic LLM Chain"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash-001",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        144,
+        -16
+      ],
+      "id": "a76a27ea-d2b8-4154-8f2c-421a5f888c56",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "ugFswMkV444QjGve",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"fulfillmentText\": \"{{$json.text.replaceAll('\\n', ' ')}}\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        368,
+        -32
+      ],
+      "id": "949f5b2d-437c-4693-8046-ef60465939a2",
+      "name": "Respond to Webhook"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "c316f70c-8a13-4787-9c4f-59957003956a",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "a165590356a30112d7c9d0adcc2d882492b9f02b099caaa0ac0032358a3c86c0"
+  },
+  "id": "phzWgNyBF2mA3hmc",
+  "tags": []
+}

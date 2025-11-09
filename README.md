@@ -21,7 +21,7 @@ A comunicação entre o Dialogflow e o n8n é feita via **Webhook HTTP**, com um
 ## Arquitetura do fluxo
 
 1. O usuário envia uma mensagem ao bot no Dialogflow  
-2. O Dialogflow aciona o webhook → `https://xxxxx.ngrok-free.dev/webhook`
+2. O Dialogflow aciona o webhook
 3. O n8n recebe os dados, processa e envia a mensagem para uma LLM
 4. A resposta é formatada e enviada de volta ao Dialogflow
 5. O usuário visualiza a resposta no chat
